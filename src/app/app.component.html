@@ -2,17 +2,27 @@
   <mdb-navbar-brand><a class="navbar-brand">Shaped Audio</a></mdb-navbar-brand>
 </mdb-navbar>
 
-<mat-slider
-  thumbLabel
-  [displayWith]="formatLabel"
-  [(ngModel)]="value"
-  (change)="changePosition()"
-  tickInterval="1000"
-  step="1000"
-  min="0"
-  max='{{duration}}'
-  aria-label="units"></mat-slider>
+<div class="d-flex justify-content-center flex-column mt-5">
+  <div class="justify-content-center flex-center">
+    <mat-slider
+      thumbLabel
+      [displayWith]="formatLabel"
+      [(ngModel)]="value"
+      (change)="changePosition()"
+      tickInterval="1000"
+      step="1000"
+      min="0"
+      max='{{duration}}'
+      aria-label="units"></mat-slider>
 
-<mdb-icon fas icon="play" (click)="play()"></mdb-icon>
-<mdb-icon fas icon="stop" (click)="stop()"></mdb-icon>
+    <mdb-icon fas icon="play" (click)="play()"></mdb-icon>
+    <mdb-icon fas icon="stop" (click)="stop()"></mdb-icon>
+  </div>
+  <div>
+    <app-upload-file #filesUploader></app-upload-file>
+  </div>
+
+</div>
+
+
 

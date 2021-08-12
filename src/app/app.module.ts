@@ -7,10 +7,16 @@ import {ButtonsModule, IconsModule, MDBBootstrapModule, NavbarModule, WavesModul
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSliderModule} from '@angular/material/slider';
 import {FormsModule} from '@angular/forms';
+import { ProgressComponent } from './components/progress/progress.component';
+import { UploadFileDirective } from './directives/upload-file.directive';
+import { UploadFileComponent } from './components/upload-file/upload-file.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ProgressComponent,
+    UploadFileDirective,
+    UploadFileComponent
   ],
   imports: [
     BrowserModule,
