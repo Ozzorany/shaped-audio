@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import {UploadFileComponent} from './components/upload-file/upload-file.component';
 
 @Component({
@@ -12,15 +12,15 @@ export class AppComponent implements OnInit {
   value: number = 0;
   audio = new Audio();
   duration: number = 1;
-  isFileUploaded: boolean = false;
   isPaused: boolean = true;
   selectedSpeed: string = '3';
+  currentTime: string = '00:00:00';
+  currentFile: any;
 
   constructor() {
   }
 
   ngOnInit(): void {
-
   }
 
   initialAudio(): void {
@@ -34,6 +34,7 @@ export class AppComponent implements OnInit {
     this.audio.addEventListener('timeupdate', () => {
       const currentTime = Math.floor(this.audio.currentTime);
       this.value = currentTime ;
+      this.currentTime = new Date(this.value * 1000).toISOString().substr(11, 8)
     }, false);
   }
 
@@ -52,8 +53,11 @@ export class AppComponent implements OnInit {
   }
 
   play(): void {
-    if (this.isFileUploaded) {
+    if (!!this.currentFile) {
       if(this.isPaused) {
+        if(this.audio.currentTime > 5) {
+          this.audio.currentTime = this.audio.currentTime - 5;
+        }
         this.audio.play();
         this.isPaused = false;
       } else {
@@ -64,7 +68,7 @@ export class AppComponent implements OnInit {
   }
 
   stop(): void {
-    if (this.isFileUploaded) {
+    if (this.currentFile) {
       this.audio.pause();
       this.value =  0;
       this.audio.currentTime = this.value;
@@ -73,9 +77,10 @@ export class AppComponent implements OnInit {
   }
 
   uploadDone(): void {
-    this.isFileUploaded = true;
-    this.audio.src = URL.createObjectURL(this.filesUploader.files[0]);
-    this.initialAudio();
+    if(!!this.currentFile){
+      this.audio.src = URL.createObjectURL(this.filesUploader.files[0]);
+      this.initialAudio();
+    }
   }
 
   selectSpeed(event: Event): void{
@@ -102,6 +107,17 @@ export class AppComponent implements OnInit {
         this.audio.playbackRate = 1.6;
         break;
     }
+  }
 
+  selectedFile(event: any) {
+    this.currentFile = event;
+    this.audio.src = URL.createObjectURL(this.currentFile);
+    this.initialAudio();
+    this.isPaused = true;
+  }
+
+  @HostListener('document:keydown.f2', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    this.play();
   }
 }

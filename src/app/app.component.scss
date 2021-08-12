@@ -7,6 +7,11 @@ mat-slider {
   cursor: pointer;
 }
 
+.active-stop {
+  color: #787070;
+  cursor: pointer;
+}
+
 .inActive-stop {
   color: #a6a6a8;
   cursor: pointer;
@@ -14,4 +19,15 @@ mat-slider {
 
 .inActive-play {
   color: #A6A6A8FF;
+}
+
+::ng-deep .mat-slider-wrapper {
+  .mat-slider-thumb-container {
+    .mat-slider-thumb-label {
+      width: 47px;
+      height: 47px;
+      top: -60px;
+      right: -25px;
+    }
+  }
 }

@@ -8,8 +8,10 @@ import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@a
 export class UploadFileComponent implements OnInit {
   @ViewChild("fileDropRef", {static: false}) fileDropEl: ElementRef | undefined;
   @Output() uploadDone: EventEmitter<void> = new EventEmitter();
-
+  @Output() selectedFile: EventEmitter<any> = new EventEmitter();
+  isFileUploaded: boolean = false;
   files: any[] = [];
+  selectedFileIndex: number = -1;
 
   constructor() {
   }
@@ -55,7 +57,7 @@ export class UploadFileComponent implements OnInit {
           if (this.files[index].progress === 100) {
             clearInterval(progressInterval);
             this.uploadFilesSimulator(index + 1);
-            this.uploadDone.emit();
+            this.isFileUploaded = true;
           } else {
             this.files[index].progress += 5;
           }
@@ -92,5 +94,12 @@ export class UploadFileComponent implements OnInit {
     const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+  }
+
+  selectFile(file: any): void {
+    if(this.isFileUploaded) {
+      this.selectedFileIndex = this.files.indexOf(file);
+      this.selectedFile.emit(file);
+    }
   }
 }

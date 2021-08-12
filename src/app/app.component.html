@@ -4,7 +4,7 @@
 
 <div class="d-flex justify-content-center flex-column mt-5">
   <div class="justify-content-center flex-center">
-    <span>{{ (value * 1000) | date:'HH:mm:ss'}}</span>
+    <span>{{currentTime}}</span>
     <mat-slider
       thumbLabel
       [displayWith]="formatLabel"
@@ -19,10 +19,11 @@
     <div class="d-flex justify-context-around align-items-center">
       <div *ngIf="isPaused; else pause">
         <mdb-icon fas icon="play" (click)="play()"
-                  [ngClass]="{'active-play': isFileUploaded, 'inActive-play': !isFileUploaded}"></mdb-icon>
+                  [ngClass]="{'active-play': !!currentFile, 'inActive-play': !currentFile}"></mdb-icon>
       </div>
       <div class="mx-2">
-        <mdb-icon fas icon="stop" (click)="stop()" [ngClass]="{'inActive-stop': !isFileUploaded}"></mdb-icon>
+        <mdb-icon fas icon="stop" (click)="stop()"
+                  [ngClass]="{'inActive-stop': !currentFile, 'active-stop': !!currentFile}"></mdb-icon>
       </div>
       <div>
         <select class="browser-default custom-select"
@@ -40,14 +41,17 @@
   </div>
   <div>
     <app-upload-file #filesUploader
-                     (uploadDone)="uploadDone()">
+                     (uploadDone)="uploadDone()"
+                     (selectedFile)="selectedFile($event)">
     </app-upload-file>
   </div>
 
 </div>
 
 <ng-template #pause>
-  <mdb-icon fas icon="pause" (click)="play()" [ngClass]="{'inActive-stop': !this.isFileUploaded}"></mdb-icon>
+  <mdb-icon fas icon="pause"
+            style="cursor:pointer;"
+            class="red-text" (click)="play()" [ngClass]="{'inActive-stop': !currentFile}"></mdb-icon>
 </ng-template>
 
 
