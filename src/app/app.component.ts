@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {UploadFileComponent} from './components/upload-file/upload-file.component';
 
 @Component({
@@ -6,16 +6,17 @@ import {UploadFileComponent} from './components/upload-file/upload-file.componen
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   // @ts-ignore
   @ViewChild('filesUploader', {static: false}) filesUploader: UploadFileComponent;
-  title = 'shaped-audio';
-  value: number = 50;
+  value: number = 0;
   audio = new Audio();
-  duration: number = 10000;
+  duration: number = 1;
+  isFileUploaded: boolean = false;
+  isPaused: boolean = true;
+  selectedSpeed: string = '3';
 
   constructor() {
-    //this.initialAudio();
   }
 
   ngOnInit(): void {
@@ -23,42 +24,84 @@ export class AppComponent implements OnInit{
   }
 
   initialAudio(): void {
-    //this.audio.src = '../assets/mp3/Lemon-Tree.mp3';
     this.audio.load();
     this.duration = this.audio.duration;
 
-    this.audio.addEventListener('loadedmetadata',() =>{
-      this.duration = this.audio.duration * 1000;
-    },false);
+    this.audio.addEventListener('loadedmetadata', () => {
+      this.duration = this.audio.duration;
+    }, false);
 
     this.audio.addEventListener('timeupdate', () => {
       const currentTime = Math.floor(this.audio.currentTime);
-      this.value = currentTime * 1000;
+      this.value = currentTime ;
     }, false);
   }
 
   formatLabel(value: number) {
-    if (value >= 1000) {
-      return Math.round(value / 1000);
+    let timeFormat = value.toString();
+
+    if (value >= 1) {
+     timeFormat = new Date(value * 1000).toISOString().substr(11, 8)
     }
 
-    return value;
+    return timeFormat;
   }
 
   changePosition() {
-    this.audio.currentTime = this.value / 1000;
+    this.audio.currentTime = this.value;
   }
 
   play(): void {
-    if(this.audio.src.length){
-      this.audio.play();
-    } else {
-      this.audio.src =  URL.createObjectURL(this.filesUploader.files[0]);
-      this.initialAudio();
+    if (this.isFileUploaded) {
+      if(this.isPaused) {
+        this.audio.play();
+        this.isPaused = false;
+      } else {
+        this.audio.pause();
+        this.isPaused = true;
+      }
     }
   }
 
   stop(): void {
-    this.audio.pause();
+    if (this.isFileUploaded) {
+      this.audio.pause();
+      this.value =  0;
+      this.audio.currentTime = this.value;
+      this.isPaused = true;
+    }
+  }
+
+  uploadDone(): void {
+    this.isFileUploaded = true;
+    this.audio.src = URL.createObjectURL(this.filesUploader.files[0]);
+    this.initialAudio();
+  }
+
+  selectSpeed(event: Event): void{
+    switch (this.selectedSpeed) {
+      case '0':
+        this.audio.playbackRate=0.5;
+        break;
+      case '1':
+        this.audio.playbackRate = 0.7;
+        break;
+      case '2':
+        this.audio.playbackRate = 0.9;
+        break;
+      case '3':
+        this.audio.playbackRate = 1;
+        break;
+      case '4':
+        this.audio.playbackRate = 1.2;
+        break;
+      case '5':
+        this.audio.playbackRate = 1.4;
+        break;
+      case '6':
+        this.audio.playbackRate = 1.6;
+        break;
+    }
+
   }
 }

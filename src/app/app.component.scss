@@ -1,3 +1,17 @@
 mat-slider {
   width: 300px;
 }
+
+.active-play {
+  color: #35c571;
+  cursor: pointer;
+}
+
+.inActive-stop {
+  color: #a6a6a8;
+  cursor: pointer;
+}
+
+.inActive-play {
+  color: #A6A6A8FF;
+}

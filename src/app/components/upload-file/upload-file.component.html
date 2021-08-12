@@ -5,8 +5,8 @@
   <h3>או</h3>
   <label for="fileDropRef">חפשו קבצים</label>
 </div>
-<div class="files-list">
-  <div class="single-file" *ngFor="let file of files; let i = index">
+<div class="d-flex justify-content-center flex-center flex-column files-list">
+  <div class="justify-content-center flex-center w-50 single-file" *ngFor="let file of files; let i = index">
     <img src="assets/img/dnd/ic-file.svg" width="45px" alt="file">
     <div class="info">
       <h4 class="name">
@@ -15,7 +15,7 @@
       <p class="size">
         {{ formatBytes(file?.size) }}
       </p>
-      <app-progress [progress]="file?.progress"></app-progress>
+        <app-progress [progress]="file?.progress"></app-progress>
     </div>
     <img src="assets/img/dnd/ic-delete-file.svg" class="delete" width="20px" alt="file" (click)="deleteFile(i)">
   </div>

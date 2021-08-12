@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-upload-file',
@@ -7,6 +7,8 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 })
 export class UploadFileComponent implements OnInit {
   @ViewChild("fileDropRef", {static: false}) fileDropEl: ElementRef | undefined;
+  @Output() uploadDone: EventEmitter<void> = new EventEmitter();
+
   files: any[] = [];
 
   constructor() {
@@ -53,6 +55,7 @@ export class UploadFileComponent implements OnInit {
           if (this.files[index].progress === 100) {
             clearInterval(progressInterval);
             this.uploadFilesSimulator(index + 1);
+            this.uploadDone.emit();
           } else {
             this.files[index].progress += 5;
           }
