@@ -12,6 +12,7 @@ import { UploadFileDirective } from './directives/upload-file.directive';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [
@@ -31,10 +32,9 @@ import { environment } from '../environments/environment';
     MatSliderModule,
     FormsModule,
     IconsModule,
+    NgxMaterialTimepickerModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
-      // Register the ServiceWorker as soon as the app is stable
-      // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
   ],

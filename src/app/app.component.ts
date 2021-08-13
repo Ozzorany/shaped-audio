@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   selectedSpeed: string = '3';
   currentTime: string = '00:00:00';
   currentFile: any;
+  shouldPlayBackward: boolean = true;
 
   constructor() {
   }
@@ -33,7 +34,7 @@ export class AppComponent implements OnInit {
 
     this.audio.addEventListener('timeupdate', () => {
       const currentTime = Math.floor(this.audio.currentTime);
-      this.value = currentTime ;
+      this.value = currentTime;
       this.currentTime = new Date(this.value * 1000).toISOString().substr(11, 8)
     }, false);
   }
@@ -42,7 +43,7 @@ export class AppComponent implements OnInit {
     let timeFormat = value.toString();
 
     if (value >= 1) {
-     timeFormat = new Date(value * 1000).toISOString().substr(11, 8)
+      timeFormat = new Date(value * 1000).toISOString().substr(11, 8)
     }
 
     return timeFormat;
@@ -54,10 +55,12 @@ export class AppComponent implements OnInit {
 
   play(): void {
     if (!!this.currentFile) {
-      if(this.isPaused) {
-        if(this.audio.currentTime > 5) {
+      if (this.isPaused) {
+        if (this.audio.currentTime > 5 && this.shouldPlayBackward) {
           this.audio.currentTime = this.audio.currentTime - 5;
         }
+
+        this.shouldPlayBackward = true;
         this.audio.play();
         this.isPaused = false;
       } else {
@@ -70,23 +73,23 @@ export class AppComponent implements OnInit {
   stop(): void {
     if (this.currentFile) {
       this.audio.pause();
-      this.value =  0;
+      this.value = 0;
       this.audio.currentTime = this.value;
       this.isPaused = true;
     }
   }
 
   uploadDone(): void {
-    if(!!this.currentFile){
+    if (!!this.currentFile) {
       this.audio.src = URL.createObjectURL(this.filesUploader.files[0]);
       this.initialAudio();
     }
   }
 
-  selectSpeed(event: Event): void{
+  selectSpeed(event: Event): void {
     switch (this.selectedSpeed) {
       case '0':
-        this.audio.playbackRate=0.5;
+        this.audio.playbackRate = 0.5;
         break;
       case '1':
         this.audio.playbackRate = 0.7;
@@ -137,5 +140,14 @@ export class AppComponent implements OnInit {
 
   backward(): void {
     this.audio.currentTime = this.audio.currentTime - 5;
+  }
+
+  timeChanged() {
+    this.shouldPlayBackward = false;
+    this.audio.pause();
+    this.isPaused = true;
+    const hms = this.currentTime;
+    const splitTime = hms.split(':');
+    this.audio.currentTime = (+splitTime[0]) * 60 * 60 + (+splitTime[1]) * 60 + (+splitTime[2]);
   }
 }

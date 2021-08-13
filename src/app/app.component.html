@@ -1,10 +1,22 @@
 <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark unique-color" [containerInside]="false">
-  <mdb-navbar-brand><a class="navbar-brand">Shaped Audio</a></mdb-navbar-brand>
+  <mdb-navbar-brand><a class="navbar-brand text-white font-weight-bold">Shaped Audio</a></mdb-navbar-brand>
 </mdb-navbar>
 
 <div class="d-flex justify-content-center flex-column mt-5">
   <div class="justify-content-center flex-center mt-5">
-    <span>{{currentTime}}</span>
+    <div class="md-form mr-3">
+      <input
+        type="time"
+        id="input"
+        class="form-control"
+        step='1'
+        min="00:00:00"
+        max="20:00:00"
+        [(ngModel)]="currentTime"
+        mdbInput
+        (change)="timeChanged()"
+      />
+    </div>
     <mat-slider
       thumbLabel
       [displayWith]="formatLabel"
@@ -21,11 +33,11 @@
         <mdb-icon fas icon="play" (click)="play()"
                   [ngClass]="{'active-play': !!currentFile, 'inActive-play': !currentFile}"></mdb-icon>
       </div>
-      <div class="mx-2">
-        <mdb-icon fas icon="stop" (click)="stop()"
-                  [ngClass]="{'inActive-stop': !currentFile, 'active-stop': !!currentFile}"></mdb-icon>
-      </div>
-      <div>
+<!--      <div class="mx-2">-->
+<!--        <mdb-icon fas icon="stop" (click)="stop()"-->
+<!--                  [ngClass]="{'inActive-stop': !currentFile, 'active-stop': !!currentFile}"></mdb-icon>-->
+<!--      </div>-->
+      <div class="ml-2">
         <mdb-icon fas icon="angle-double-left" size="1x"
                   [ngClass]="{'inActive-stop': !currentFile, 'active-stop': !!currentFile}"
         (click)="backward()"></mdb-icon>
