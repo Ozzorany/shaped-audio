@@ -26,7 +26,17 @@
                   [ngClass]="{'inActive-stop': !currentFile, 'active-stop': !!currentFile}"></mdb-icon>
       </div>
       <div>
-        <select class="browser-default custom-select"
+        <mdb-icon fas icon="angle-double-left" size="1x"
+                  [ngClass]="{'inActive-stop': !currentFile, 'active-stop': !!currentFile}"
+        (click)="backward()"></mdb-icon>
+      </div>
+      <div class="mx-2">
+        <mdb-icon fas icon="angle-double-right" size="1x"
+                  [ngClass]="{'inActive-stop': !currentFile, 'active-stop': !!currentFile}"
+        (click)="forward()"></mdb-icon>
+      </div>
+      <div>
+        <select class="browser-default custom-select" [disabled]="!currentFile"
                 [(ngModel)]="selectedSpeed" (change)="selectSpeed($event)">
           <option value="0">x0.5</option>
           <option value="1">x0.7</option>

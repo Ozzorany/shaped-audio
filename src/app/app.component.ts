@@ -120,4 +120,22 @@ export class AppComponent implements OnInit {
   handleKeyboardEvent(event: KeyboardEvent) {
     this.play();
   }
+
+  @HostListener('document:keydown.ArrowLeft', ['$event'])
+  handleLeftKeyboardEvent(event: KeyboardEvent) {
+    this.audio.currentTime = this.audio.currentTime - 5;
+  }
+
+  @HostListener('document:keydown.ArrowRight', ['$event'])
+  handleRightKeyboardEvent(event: KeyboardEvent) {
+    this.audio.currentTime = this.audio.currentTime + 5;
+  }
+
+  forward(): void {
+    this.audio.currentTime = this.audio.currentTime + 5;
+  }
+
+  backward(): void {
+    this.audio.currentTime = this.audio.currentTime - 5;
+  }
 }
