@@ -10,6 +10,8 @@ import {FormsModule} from '@angular/forms';
 import { ProgressComponent } from './components/progress/progress.component';
 import { UploadFileDirective } from './directives/upload-file.directive';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,13 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
     BrowserAnimationsModule,
     MatSliderModule,
     FormsModule,
-    IconsModule
+    IconsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
