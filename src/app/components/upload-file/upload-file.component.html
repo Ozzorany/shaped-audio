@@ -1,5 +1,6 @@
-<div class="container" appUploadFile (fileDropped)="onFileDropped($event)">
-  <input type="file" #fileDropRef id="fileDropRef" multiple (change)="fileBrowseHandler($event.target)" />
+<div class="container mt-4" appUploadFile (fileDropped)="onFileDropped($event)">
+  <input type="file" #fileDropRef id="fileDropRef"
+         style="cursor: pointer" multiple (change)="fileBrowseHandler($event.target)" />
   <h3>גררו קבצים לכאן</h3>
   <label for="fileDropRef">חפשו קבצים</label>
 </div>
