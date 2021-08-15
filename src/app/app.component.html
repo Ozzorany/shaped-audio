@@ -4,7 +4,7 @@
 
 <div class="d-flex justify-content-center flex-column mt-5">
   <div class="justify-content-center flex-center mt-5">
-    <div class="md-form mr-3">
+    <div class="md-form mr-4">
       <input
         type="time"
         id="input"
@@ -28,26 +28,26 @@
       max='{{duration}}'
       aria-label="units"></mat-slider>
 
-    <div class="d-flex justify-context-around align-items-center">
+    <div class="d-flex justify-context-around align-items-center ml-4">
       <div *ngIf="isPaused; else pause">
-        <mdb-icon fas icon="play" (click)="play()"
+        <mdb-icon fas icon="play" (click)="play()" size="2x"
                   [ngClass]="{'active-play': !!currentFile, 'inActive-play': !currentFile}"></mdb-icon>
       </div>
 <!--      <div class="mx-2">-->
 <!--        <mdb-icon fas icon="stop" (click)="stop()"-->
 <!--                  [ngClass]="{'inActive-stop': !currentFile, 'active-stop': !!currentFile}"></mdb-icon>-->
 <!--      </div>-->
-      <div class="ml-2">
-        <mdb-icon fas icon="angle-double-left" size="1x"
+      <div class="ml-3">
+        <mdb-icon fas icon="angle-double-left" size="2x"
                   [ngClass]="{'inActive-stop': !currentFile, 'active-stop': !!currentFile}"
         (click)="backward()"></mdb-icon>
       </div>
       <div class="mx-2">
-        <mdb-icon fas icon="angle-double-right" size="1x"
+        <mdb-icon fas icon="angle-double-right" size="2x"
                   [ngClass]="{'inActive-stop': !currentFile, 'active-stop': !!currentFile}"
         (click)="forward()"></mdb-icon>
       </div>
-      <div>
+      <div class="ml-2">
         <select class="browser-default custom-select" [disabled]="!currentFile"
                 [(ngModel)]="selectedSpeed" (change)="selectSpeed($event)">
           <option value="0">x0.5</option>
@@ -72,6 +72,7 @@
 
 <ng-template #pause>
   <mdb-icon fas icon="pause"
+            size="2x"
             style="cursor:pointer;"
             class="red-text" (click)="play()" [ngClass]="{'inActive-stop': !currentFile}"></mdb-icon>
 </ng-template>
