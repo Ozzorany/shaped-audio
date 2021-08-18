@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   audio = new Audio();
   duration: number = 1;
   isPaused: boolean = true;
-  selectedSpeed: string = '3';
+  selectedSpeed: string = '6';
   currentTime: string = '00:00:00';
   currentFile: any;
   shouldPlayBackward: boolean = true;
@@ -89,25 +89,55 @@ export class AppComponent implements OnInit {
   selectSpeed(event: Event): void {
     switch (this.selectedSpeed) {
       case '0':
-        this.audio.playbackRate = 0.5;
+        this.audio.playbackRate = 0.4;
         break;
       case '1':
-        this.audio.playbackRate = 0.7;
+        this.audio.playbackRate = 0.5;
         break;
       case '2':
-        this.audio.playbackRate = 0.9;
+        this.audio.playbackRate = 0.6;
         break;
       case '3':
-        this.audio.playbackRate = 1;
+        this.audio.playbackRate = 0.7;
         break;
       case '4':
-        this.audio.playbackRate = 1.2;
+        this.audio.playbackRate = 0.8;
         break;
       case '5':
-        this.audio.playbackRate = 1.4;
+        this.audio.playbackRate = 0.9;
         break;
       case '6':
+        this.audio.playbackRate = 1;
+        break;
+      case '7':
+        this.audio.playbackRate = 1.1;
+        break;
+      case '8':
+        this.audio.playbackRate = 1.2;
+        break;
+      case '9':
+        this.audio.playbackRate = 1.3;
+        break;
+      case '10':
+        this.audio.playbackRate = 1.4;
+        break;
+      case '11':
+        this.audio.playbackRate = 1.5;
+        break;
+      case '12':
         this.audio.playbackRate = 1.6;
+        break;
+      case '13':
+        this.audio.playbackRate = 1.7;
+        break;
+      case '14':
+        this.audio.playbackRate = 1.8;
+        break;
+      case '15':
+        this.audio.playbackRate = 1.9;
+        break;
+      case '16':
+        this.audio.playbackRate = 2;
         break;
     }
   }
